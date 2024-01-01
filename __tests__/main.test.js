@@ -3,6 +3,7 @@
  */
 const core = require('@actions/core')
 const main = require('../src/main')
+const { createNewTask } = require('../src/utils/clickup')
 
 // Mock the GitHub Actions core library
 const debugMock = jest.spyOn(core, 'debug').mockImplementation()
@@ -10,87 +11,35 @@ const getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
 const setFailedMock = jest.spyOn(core, 'setFailed').mockImplementation()
 const setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
 
-// Mock the action's main function
-const runMock = jest.spyOn(main, 'run')
-
-// Other utilities
-const timeRegex = /^\d{2}:\d{2}:\d{2}/
+jest.mock('../src/utils/clickup', () => ({
+  createNewTask: jest.fn()
+}))
 
 describe('action', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  it('sets the time output', async () => {
-    // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation(name => {
-      switch (name) {
-        case 'milliseconds':
-          return '500'
-        default:
-          return ''
-      }
-    })
+  it('should throw if CLICKUP_TOKEN is not provided', async () => {
+    process.env.CLICKUP_TOKEN = ''
 
     await main.run()
-    expect(runMock).toHaveReturned()
 
-    // Verify that all of the core library functions were called correctly
-    expect(debugMock).toHaveBeenNthCalledWith(1, 'Waiting 500 milliseconds ...')
-    expect(debugMock).toHaveBeenNthCalledWith(
-      2,
-      expect.stringMatching(timeRegex)
-    )
-    expect(debugMock).toHaveBeenNthCalledWith(
-      3,
-      expect.stringMatching(timeRegex)
-    )
-    expect(setOutputMock).toHaveBeenNthCalledWith(
-      1,
-      'time',
-      expect.stringMatching(timeRegex)
+    expect(setFailedMock).toHaveBeenCalledWith(
+      'Missing CLICKUP_TOKEN environment variable.'
     )
   })
 
-  it('sets a failed status', async () => {
-    // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation(name => {
-      switch (name) {
-        case 'milliseconds':
-          return 'this is not a number'
-        default:
-          return ''
+  it('should call createNewTask() if type is create', async () => {
+    getInputMock.mockImplementation(x => {
+      if (x === 'type') {
+        return 'create'
       }
     })
+    process.env.CLICKUP_TOKEN = 'dummytoken'
 
     await main.run()
-    expect(runMock).toHaveReturned()
 
-    // Verify that all of the core library functions were called correctly
-    expect(setFailedMock).toHaveBeenNthCalledWith(
-      1,
-      'milliseconds not a number'
-    )
-  })
-
-  it('fails if no input is provided', async () => {
-    // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation(name => {
-      switch (name) {
-        case 'milliseconds':
-          throw new Error('Input required and not supplied: milliseconds')
-        default:
-          return ''
-      }
-    })
-
-    await main.run()
-    expect(runMock).toHaveReturned()
-
-    // Verify that all of the core library functions were called correctly
-    expect(setFailedMock).toHaveBeenNthCalledWith(
-      1,
-      'Input required and not supplied: milliseconds'
-    )
+    expect(createNewTask).toHaveBeenCalled()
   })
 })

@@ -20,7 +20,7 @@ async function createNewTask({
   links_to
 }) {
   const query = new URLSearchParams({
-    custom_task_ids: custom_task_ids === 'true' || false,
+    custom_task_ids: custom_task_ids || 'false',
     team_id
   }).toString()
 

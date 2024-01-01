@@ -1,21 +1,21 @@
 {
-  "name": "javascript-action",
+  "name": "clickup-task-manager-github-action",
   "description": "GitHub Actions JavaScript Template",
-  "version": "0.0.0",
-  "author": "",
+  "version": "1.0.0",
+  "author": "p0o",
   "private": true,
-  "homepage": "https://github.com/actions/javascript-action#readme",
+  "homepage": "https://github.com/p0o/clickup-task-manager-github-action#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/javascript-action.git"
+    "url": "git+https://github.com/p0o/clickup-task-manager-github-action.git"
   },
   "bugs": {
-    "url": "https://github.com/actions/javascript-action/issues"
+    "url": "https://github.com/p0o/clickup-task-manager-github-action/issues"
   },
   "keywords": [
     "GitHub",
     "Actions",
-    "JavaScript"
+    "ClickUp"
   ],
   "exports": {
     ".": "./dist/index.js"
@@ -76,6 +76,7 @@
     "eslint-plugin-jest": "^27.6.0",
     "jest": "^29.7.0",
     "make-coverage-badge": "^1.2.0",
-    "prettier": "^3.1.1"
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
   }
 }

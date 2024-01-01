@@ -1,18 +1,68 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
-
-# Define your inputs here.
+name: 'ClickUp Task Manager Action'
+description: 'A github action to create or update tasks in ClickUp'
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  type:
+    description: 'The type of task to create'
+    enum: ['create', 'update', 'get', 'delete']
     required: true
-    default: '1000'
 
-# Define your outputs here.
+  # ==== These are used for Create New Task API Call ====
+  list_id:
+    description: 'The list_id of the task to create'
+    required: false
+  name:
+    description: 'The name of the task to create'
+    required: false
+  text_content:
+    description: 'The text_content of the task to create'
+    required: false
+  description:
+    description: 'The description of the task to create'
+    required: false
+  markdown_description:
+    description: 'The markdown_description of the task to create'
+    required: false
+  assignees:
+    description: 'The assignees of the task to create'
+    required: false
+  tags:
+    description: 'The tags of the task to create'
+    required: false
+  status:
+    description: 'The status of the task to create'
+    required: false
+  priority:
+    description: 'The priority of the task to create'
+    required: false
+  due_date:
+    description: 'The due_date of the task to create'
+    required: false
+  due_date_time:
+    description: 'The due_date_time of the task to create'
+    required: false
+  time_estimate:
+    description: 'The time_estimate of the task to create'
+    required: false
+  start_date:
+    description: 'The start_date of the task to create'
+    required: false
+  start_date_time:
+    description: 'The start_date_time of the task to create'
+    required: false
+  notify_all:
+    description: 'The notify_all of the task to create'
+    required: false
+  parent:
+    description: 'The parent of the task to create'
+    required: false
+  links_to:
+    description: 'The links_to of the task to create'
+    required: false
 outputs:
-  time:
-    description: 'Your output description here'
+  id:
+    description: 'The ClickUp ID of the task that was created'
+  url:
+    description: 'The ClickUp URL of the task that was created'
 
 runs:
   using: node20

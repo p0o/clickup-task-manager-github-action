@@ -7,6 +7,12 @@ inputs:
     required: true
 
   # ==== These are used for Create New Task API Call ====
+  custom_task_ids:
+    description: 'The custom_task_ids of the task to create'
+    required: false
+  team_id:
+    description: 'The team_id of the task to create'
+    required: false
   list_id:
     description: 'The list_id of the task to create'
     required: false

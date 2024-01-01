@@ -15,6 +15,8 @@ async function run() {
     }
 
     if (type === 'create') {
+      const custom_task_ids = core.getInput('custom_task_ids')
+      const team_id = core.getInput('team_id')
       const name = core.getInput('name', { required: true })
       const list_id = core.getInput('list_id', { required: true })
       const description = core.getInput('description')
@@ -38,6 +40,8 @@ async function run() {
       const response = await createNewTask({
         name,
         list_id,
+        team_id,
+        custom_task_ids,
         token,
         description,
         markdown_description,
@@ -63,8 +67,8 @@ async function run() {
 }
 
 function outputResposne(response) {
-  core.setOutput('id', response.body.id)
-  core.setOutput('url', response.body.url)
+  core.setOutput('id', response.id)
+  core.setOutput('url', response.url)
 }
 
 module.exports = {

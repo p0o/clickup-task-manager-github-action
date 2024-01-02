@@ -24766,11 +24766,11 @@ async function run() {
         links_to
       }
 
-      core.debug('Payload:', JSON.stringify(payload))
+      core.debug(`Payload: ${JSON.stringify(payload)}`)
 
       const response = await createNewTask(payload)
 
-      core.debug('Response:', JSON.stringify(response))
+      core.debug(`Response: ${JSON.stringify(response)}`)
 
       outputResposne(response)
     }

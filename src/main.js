@@ -22,7 +22,7 @@ async function run() {
       const description = core.getInput('description')
       const markdown_description = core.getInput('markdown_description')
       let assignees = core.getInput('assignees')
-      if (assignees) {
+      if (assignees && typeof assignees === 'string') {
         assignees = JSON.parse(assignees)
       }
       const tags = core.getInput('tags')

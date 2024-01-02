@@ -59,11 +59,22 @@ async function run() {
         links_to
       }
 
+      // Remove any empty values
+      for (const key in payload) {
+        if (!payload[key]) {
+          delete payload[key]
+        }
+      }
+
       core.debug(`Payload: ${JSON.stringify(payload)}`)
 
       const response = await createNewTask(payload)
 
       core.debug(`Response: ${JSON.stringify(response)}`)
+
+      if (response.err) {
+        throw new Error(response.err)
+      }
 
       outputResposne(response)
     }

@@ -37,7 +37,7 @@ async function run() {
       const parent = core.getInput('parent')
       const links_to = core.getInput('links_to')
 
-      const response = await createNewTask({
+      const payload = {
         name,
         list_id,
         team_id,
@@ -57,7 +57,14 @@ async function run() {
         notify_all,
         parent,
         links_to
-      })
+      }
+
+      core.debug('Payload:', JSON.stringify(payload))
+
+      const response = await createNewTask(payload)
+
+      core.debug('Response:', JSON.stringify(response))
+
       outputResposne(response)
     }
   } catch (error) {

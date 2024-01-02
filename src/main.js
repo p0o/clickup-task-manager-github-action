@@ -60,7 +60,7 @@ async function run() {
       }
 
       // Remove any empty values
-      for (key in payload) {
+      for (const key in payload) {
         if (!payload[key]) {
           delete payload[key]
         }
